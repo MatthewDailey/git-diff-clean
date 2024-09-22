@@ -1,4 +1,4 @@
-import { parseDiff, splitFilesInDiff } from './show_diff'
+import { parseDiff, splitFilesInDiff } from './diff'
 
 const SAMPLE_DIFF_1 = `diff --git a/public/index.html b/public/index.html
 index 3664159..b0e9a85 100644

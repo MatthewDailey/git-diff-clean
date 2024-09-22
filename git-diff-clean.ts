@@ -1,6 +1,6 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { showDiff, DiffOptions } from './src/show_diff'
+import { showDiff, DiffOptions } from './diff'
 
 const argv = yargs(hideBin(process.argv))
   .option('includePlusMinus', {
