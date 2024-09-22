@@ -4,8 +4,6 @@ Cleaner git-diff output for terminal and as node library.
 
 ![git-diff vs git-diff-clean](example.png)
 
-Features:
-
 - Link to changes via cmd+click
 - Emoji to visuall group changes in the same file
 - Stipped down output
