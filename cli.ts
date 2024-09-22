@@ -18,16 +18,22 @@ const argv = yargs(hideBin(process.argv))
   .option('includeEmoji', {
     alias: 'e',
     type: 'boolean',
-    description: 'Include emojis in the diff output',
+    description: 'Include emojis next to file names to visually group them.',
     default: true,
   })
   .option('includeFooter', {
     alias: 'f',
     type: 'boolean',
-    description: 'Include footer in the diff output',
+    description: 'Include a line as a footer to close out the diff output',
+    default: true,
+  })
+  .option('useLess', {
+    alias: 'l',
+    type: 'boolean',
+    description: 'Use less as the pager to view output',
     default: true,
   })
   .help()
-  .alias('help', 'h').argv as unknown as DiffOptions
+  .alias('help', 'h').argv as unknown as DiffOptions & { useLess: boolean }
 
-showDiff(argv)
+showDiff(argv, argv.useLess)

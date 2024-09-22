@@ -9,9 +9,13 @@ const Overline = '\x1b[53m' // \u203E
 const Reset = '\x1b[0m'
 
 export type DiffOptions = {
+  /* Include plus/minus signs in the diff output */
   includePlusMinus: boolean
+  /* Include colors in the diff output */
   includeColors: boolean
+  /* Include emojis next to file names to visually group them. */
   includeEmoji: boolean
+  /* Include a line as a footer to close out the diff output */
   includeFooter: boolean
 }
 
@@ -167,28 +171,30 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
     .join('\n\n')
 }
 
-export function getDiff(
-  options: DiffOptions = {
-    includePlusMinus: true,
-    includeColors: true,
-    includeEmoji: false,
-    includeFooter: false,
-  },
-): string {
+/**
+ * Get the current git diff as a string.
+ *
+ * @param options [DiffOptions] - Options for the diff output.
+ * @returns [String] git diff string
+ */
+export function getDiff(options: DiffOptions): string {
   const diffOutput = execSync('git diff', { encoding: 'utf8' })
   const diffs = parseDiff(diffOutput)
   return serializeDiffs(diffs, options)
 }
 
-export function showDiff(
-  options: DiffOptions = {
-    includePlusMinus: false,
-    includeColors: true,
-    includeEmoji: true,
-    includeFooter: true,
-  },
-) {
+/**
+ * Open the current git diff in less.
+ *
+ * @param options [DiffOptions] - Options for the diff output.
+ */
+export function showDiff(options: DiffOptions, useLess: boolean = true) {
   const diffOutput = execSync('git diff', { encoding: 'utf8' })
   const diffs = parseDiff(diffOutput)
-  openInLess(serializeDiffs(diffs, options))
+  const serialized = serializeDiffs(diffs, options)
+  if (useLess) {
+    openInLess(serialized)
+  } else {
+    console.log(serialized)
+  }
 }
