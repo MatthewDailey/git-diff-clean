@@ -14,11 +14,11 @@
   "author": "Matt Dailey",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^22.5.5",
+    "@types/node": "22.5.5",
     "vitest": "2.0.5"
   },
   "dependencies": {
-    "esbuild-runner": "^2.2.2",
-    "yargs": "^17.7.2"
+    "esbuild-runner": "2.2.2",
+    "yargs": "17.7.2"
   }
 }
