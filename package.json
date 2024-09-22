@@ -1,0 +1,22 @@
+{
+  "name": "git-diff-clean",
+  "version": "1.0.0",
+  "description": "A slightly cleaner git diff viewer.",
+  "main": "cli.js",
+  "bin": {
+    "git-diff-clean": "./cli.js"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "vitest": "2.0.5"
+  },
+  "dependencies": {
+    "esbuild-runner": "^2.2.2",
+    "yargs": "^17.7.2"
+  }
+}
