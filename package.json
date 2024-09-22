@@ -2,11 +2,14 @@
   "name": "git-diff-clean",
   "version": "1.0.0",
   "description": "A slightly cleaner git diff viewer.",
-  "main": "cli.js",
+  "main": "dist/cli.js",
+  "types": "dist/index.d.ts",
   "bin": {
-    "git-diff-clean": "./cli.js"
+    "git-diff-clean": "./dist/cli.js"
   },
   "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/cli.js",
     "test": "vitest"
   },
   "author": "",
