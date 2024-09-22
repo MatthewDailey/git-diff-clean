@@ -28,13 +28,6 @@ const argv = yargs(hideBin(process.argv))
     default: true,
   })
   .help()
-  .alias('help', 'h').argv
+  .alias('help', 'h').argv as unknown as DiffOptions
 
-const options: DiffOptions = {
-  includePlusMinus: argv.includePlusMinus,
-  includeColors: argv.includeColors,
-  includeEmoji: argv.includeEmoji,
-  includeFooter: argv.includeFooter,
-}
-
-showDiff(options)
+showDiff(argv)
