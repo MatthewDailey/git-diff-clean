@@ -2,18 +2,17 @@
   "name": "git-diff-clean",
   "version": "1.0.0",
   "description": "A slightly cleaner git diff viewer.",
-  "main": "dist/cli.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "git-diff-clean": "./dist/cli.js"
+    "git-diff-clean": "./cli.js"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/cli.js",
     "test": "vitest"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Matt Dailey",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.5.5",
     "vitest": "2.0.5"
