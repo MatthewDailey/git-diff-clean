@@ -6,6 +6,7 @@ Cleaner git-diff output for terminal and as node library.
 
 - Link to changes via cmd+click
 - Emoji to visually group changes in the same file
+- Include untracked files
 - Stipped down output
 
 ## Terminal usage
@@ -22,7 +23,10 @@ Options:
                           them.                        [boolean] [default: true]
   -f, --includeFooter     Include a line as a footer to close out the diff
                           output                       [boolean] [default: true]
-  -l, --useLess          Use less as the pager to view output     [boolean] [default: true]
+  -l, --useLess           Use less as the pager to view output
+                                                       [boolean] [default: true]
+  -u, --includeUntracked  Include untracked files in the diff output (not used
+                          when --cached is on)         [boolean] [default: true]
   -h, --help              Show help                                    [boolean]
 ```
 

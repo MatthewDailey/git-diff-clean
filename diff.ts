@@ -77,12 +77,12 @@ export function splitFilesInDiff(input: string): string[] {
     diffs.push(currentDiff)
   }
 
-  return diffs
+  return diffs.filter((d) => d.trim() !== '')
 }
 
 function getLineNumber(line: string): number | null {
-  const lineNumberMatch = line.match(/@@ -(\d+),\d+ \+(\d+),\d+ @@/)
-  return lineNumberMatch ? parseInt(lineNumberMatch[2]) : null
+  const lineNumberMatch = line.match(/@@ -(\d+),\d+ .* @@/)
+  return lineNumberMatch ? parseInt(lineNumberMatch[1]) : null
 }
 
 export function parseDiff(diffOutput: string): Diff[] {
@@ -100,7 +100,7 @@ export function parseDiff(diffOutput: string): Diff[] {
     let currentSectionLineNumber: number | null = null
     let currentSectionLines: string[] = []
     const addDiff = () => {
-      if (currentSectionLineNumber && currentSectionLines.length > 0) {
+      if (currentSectionLineNumber !== null && currentSectionLines.length > 0) {
         diffs.push({
           path: filePath,
           lineNumber: currentSectionLineNumber,
@@ -111,7 +111,7 @@ export function parseDiff(diffOutput: string): Diff[] {
 
     for (const line of lines) {
       const lineNumber = getLineNumber(line)
-      if (lineNumber) {
+      if (lineNumber !== null) {
         addDiff()
         currentSectionLines = []
         currentSectionLineNumber = lineNumber
@@ -174,9 +174,14 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
 }
 
 function getUntrackedFilesAsDiff(): string {
-  return execSync('git ls-files --others --exclude-standard -z', {
-    encoding: 'utf8',
-  })
+  // Note we include || true to avoid the command failing if there are no untracked files.
+  // This is from https://stackoverflow.com/questions/855767/can-i-use-git-diff-on-untracked-files + ChatGPT
+  return execSync(
+    'git ls-files --others --exclude-standard -z | xargs -0 -n 1 git --no-pager diff --no-index /dev/null || true',
+    {
+      encoding: 'utf8',
+    },
+  )
 }
 
 function getDiffString(): string {

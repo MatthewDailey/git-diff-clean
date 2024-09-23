@@ -1,8 +1,14 @@
 # TODO
 
 - add '--cached' arg (pass all args? no this is opinionated to my needs)
-- include untracked (default true, when --cached not applied)
 - try bun or deno instead of my cli.js + esbuild/runner thing
+
+### Tests to add
+
+Should add a scaffold that runs on real repos or at least mock out the functions that call git diff
+
+- new file
+- cached
 
 ### Notes
 
