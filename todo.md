@@ -1,7 +1,8 @@
 # TODO
 
 - add '--cached' arg (pass all args? no this is opinionated to my needs)
-- try bun or deno instead of my cli.js + esbuild/runner thing
+- try bun instead of my cli.js + esbuild/runner thing for performance
+- push new version
 
 ### Tests to add
 
