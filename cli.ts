@@ -33,6 +33,12 @@ const argv = yargs(hideBin(process.argv))
     description: 'Use less as the pager to view output',
     default: true,
   })
+  .option('includeUntracked', {
+    alias: 'u',
+    type: 'boolean',
+    description: 'Include untracked files in the diff output (not used when --cached is on)',
+    default: true,
+  })
   .help()
   .alias('help', 'h').argv as unknown as DiffOptions & { useLess: boolean }
 

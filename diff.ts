@@ -17,6 +17,8 @@ export type DiffOptions = {
   includeEmoji: boolean
   /* Include a line as a footer to close out the diff output */
   includeFooter: boolean
+  /* Include untracked files in the diff output */
+  includeUntracked: boolean
 }
 
 export type Diff = {
@@ -171,6 +173,26 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
     .join('\n\n')
 }
 
+function getUntrackedFilesAsDiff(): string {
+  return execSync('git ls-files --others --exclude-standard -z', {
+    encoding: 'utf8',
+  })
+}
+
+function getDiffString(): string {
+  return execSync('git diff', { encoding: 'utf8' })
+}
+
+function getDiffs(includeUntracked: boolean): Diff[] {
+  let diffOutput = getDiffString()
+  if (includeUntracked) {
+    const untrackedFiles = getUntrackedFilesAsDiff()
+    diffOutput += '\n\n'
+    diffOutput += untrackedFiles
+  }
+  return parseDiff(diffOutput)
+}
+
 /**
  * Get the current git diff as a string.
  *
@@ -178,8 +200,7 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
  * @returns [String] git diff string
  */
 export function getDiff(options: DiffOptions): string {
-  const diffOutput = execSync('git diff', { encoding: 'utf8' })
-  const diffs = parseDiff(diffOutput)
+  const diffs = getDiffs(options.includeUntracked)
   return serializeDiffs(diffs, options)
 }
 
@@ -189,8 +210,7 @@ export function getDiff(options: DiffOptions): string {
  * @param options [DiffOptions] - Options for the diff output.
  */
 export function showDiff(options: DiffOptions, useLess: boolean = true) {
-  const diffOutput = execSync('git diff', { encoding: 'utf8' })
-  const diffs = parseDiff(diffOutput)
+  const diffs = getDiffs(options.includeUntracked)
   const serialized = serializeDiffs(diffs, options)
   if (useLess) {
     openInLess(serialized)
