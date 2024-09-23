@@ -95,7 +95,12 @@ export function parseDiff(diffOutput: string): Diff[] {
 
   fileParts.forEach((part) => {
     const lines = part.split('\n')
-    const filePath = lines[0].split(' ')[2].replace(/^a\//, '')
+    const filePath =
+      lines[0]
+        .split(' b/')
+        .pop()
+        ?.trim()
+        .replace(/^"(.+)"$/, '$1') || ''
 
     let currentSectionLineNumber: number | null = null
     let currentSectionLines: string[] = []

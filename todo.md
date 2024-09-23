@@ -2,6 +2,7 @@
 
 - add '--cached' arg (pass all args? no this is opinionated to my needs)
 - try bun instead of my cli.js + esbuild/runner thing for performance
+- make file linking work for files with spaces (idk if this is possible?)
 - push new version
 
 ### Tests to add
@@ -9,6 +10,7 @@
 Should add a scaffold that runs on real repos or at least mock out the functions that call git diff
 
 - new file
+- files with spaces in the name
 - cached
 
 ### Notes
