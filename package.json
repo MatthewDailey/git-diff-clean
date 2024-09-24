@@ -1,6 +1,6 @@
 {
   "name": "git-diff-clean",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A slightly cleaner git diff viewer.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

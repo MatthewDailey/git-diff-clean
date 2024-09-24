@@ -1,6 +1,5 @@
 # TODO
 
-- add '--cached' arg (pass all args? no this is opinionated to my needs)
 - try bun instead of my cli.js + esbuild/runner thing for performance
 - make file linking work for files with spaces (idk if this is possible?)
 - push new version
