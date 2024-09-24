@@ -1,4 +1,4 @@
-import yargs from 'yargs'
+ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { showDiff, DiffOptions } from './diff'
 
@@ -38,6 +38,12 @@ const argv = yargs(hideBin(process.argv))
     type: 'boolean',
     description: 'Include untracked files in the diff output (not used when --cached is on)',
     default: true,
+  })
+  .option('cached', {
+    alias: 'g',
+    type: 'boolean',
+    description: 'Show staged changes (--cached)',
+    default: false,
   })
   .help()
   .alias('help', 'h').argv as unknown as DiffOptions & { useLess: boolean }

@@ -1,4 +1,4 @@
-import { execSync, spawn } from 'child_process'
+ import { execSync, spawn } from 'child_process'
 
 const Red = '\x1b[31m'
 const Green = '\x1b[32m'
@@ -19,6 +19,8 @@ export type DiffOptions = {
   includeFooter: boolean
   /* Include untracked files in the diff output */
   includeUntracked: boolean
+  /* Show staged changes */
+  cached: boolean
 }
 
 export type Diff = {
@@ -170,17 +172,12 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
       const header = getHeader(diff, options, fileIndex, options.includeEmoji)
       const footer = options.includeFooter ? ' '.repeat(header.length) : ''
 
-      return `${coloredHeader(header, options)}\n${coloredDiff(diff, options)}\n${coloredFooter(
-        footer,
-        options,
-      )}`
+      return `${coloredHeader(header, options)}\n${coloredDiff(diff, options)}\n${coloredFooter(footer, options)}`
     })
     .join('\n\n')
 }
 
 function getUntrackedFilesAsDiff(): string {
-  // Note we include || true to avoid the command failing if there are no untracked files.
-  // This is from https://stackoverflow.com/questions/855767/can-i-use-git-diff-on-untracked-files + ChatGPT
   return execSync(
     'git ls-files --others --exclude-standard -z | xargs -0 -n 1 git --no-pager diff --no-index /dev/null || true',
     {
@@ -189,13 +186,14 @@ function getUntrackedFilesAsDiff(): string {
   )
 }
 
-function getDiffString(): string {
-  return execSync('git diff', { encoding: 'utf8' })
+function getDiffString(cached: boolean): string {
+  const command = cached ? 'git diff --cached' : 'git diff'
+  return execSync(command, { encoding: 'utf8' })
 }
 
-function getDiffs(includeUntracked: boolean): Diff[] {
-  let diffOutput = getDiffString()
-  if (includeUntracked) {
+function getDiffs(includeUntracked: boolean, cached: boolean): Diff[] {
+  let diffOutput = getDiffString(cached)
+  if (includeUntracked && !cached) {
     const untrackedFiles = getUntrackedFilesAsDiff()
     diffOutput += '\n\n'
     diffOutput += untrackedFiles
@@ -210,7 +208,7 @@ function getDiffs(includeUntracked: boolean): Diff[] {
  * @returns [String] git diff string
  */
 export function getDiff(options: DiffOptions): string {
-  const diffs = getDiffs(options.includeUntracked)
+  const diffs = getDiffs(options.includeUntracked, options.cached)
   return serializeDiffs(diffs, options)
 }
 
@@ -220,7 +218,7 @@ export function getDiff(options: DiffOptions): string {
  * @param options [DiffOptions] - Options for the diff output.
  */
 export function showDiff(options: DiffOptions, useLess: boolean = true) {
-  const diffs = getDiffs(options.includeUntracked)
+  const diffs = getDiffs(options.includeUntracked, options.cached)
   const serialized = serializeDiffs(diffs, options)
   if (useLess) {
     openInLess(serialized)

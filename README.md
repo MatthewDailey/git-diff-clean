@@ -1,4 +1,4 @@
-# git-diff-clean
+ # git-diff-clean
 
 Cleaner git-diff output for terminal and as node library.
 
@@ -7,7 +7,7 @@ Cleaner git-diff output for terminal and as node library.
 - Link to changes via cmd+click
 - Emoji to visually group changes in the same file
 - Include untracked files
-- Stipped down output
+- Stripped down output
 
 ## Terminal usage
 
@@ -27,6 +27,8 @@ Options:
                                                        [boolean] [default: true]
   -u, --includeUntracked  Include untracked files in the diff output (not used
                           when --cached is on)         [boolean] [default: true]
+  -g, --cached            Show staged changes (--cached)
+                                                       [boolean] [default: false]
   -h, --help              Show help                                    [boolean]
 ```
 
@@ -44,6 +46,8 @@ export type DiffOptions = {
   includeEmoji: boolean
   /* Include a line as a footer to close out the diff output */
   includeFooter: boolean
+  /* Show staged changes */
+  cached: boolean
 }
 
 /**
