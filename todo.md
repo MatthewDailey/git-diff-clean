@@ -1,8 +1,11 @@
 # TODO
 
-- try bun instead of my cli.js + esbuild/runner thing for performance
-- make file linking work for files with spaces (idk if this is possible?)
-- push new version
+-
+
+### Ideas
+
+- Thought about trying bun to run faster but that would make this not work via npx. If it does feel slow, will reconsider for myself.
+- Make file linking work with spaces would be nice but seems like a limitation of VSCode. (Would be one perk of working on a fork like Cursor)
 
 ### Tests to add
 
