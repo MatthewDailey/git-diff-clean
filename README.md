@@ -1,4 +1,4 @@
- # git-diff-clean
+# git-diff-clean
 
 Cleaner git-diff output for terminal and as node library.
 
@@ -32,7 +32,9 @@ Options:
   -h, --help              Show help                                    [boolean]
 ```
 
-And if you like it `alias d="npx git-diff-clean"`
+Or faster via [bun](https://bun.sh/) with `bunx git-diff-clean`
+
+And if you like it `alias d="bunx git-diff-clean"`
 
 ## Library usage
 
