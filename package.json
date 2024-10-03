@@ -1,15 +1,16 @@
 {
   "name": "git-diff-clean",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A slightly cleaner git diff viewer.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "git-diff-clean": "./cli.js"
+    "git-diff-clean": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest"
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "author": "Matt Dailey",
   "license": "MIT",
