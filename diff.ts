@@ -1,4 +1,4 @@
- import { execSync, spawn } from 'child_process'
+import { execSync, spawn } from 'child_process'
 
 const Red = '\x1b[31m'
 const Green = '\x1b[32m'
@@ -172,7 +172,10 @@ export function serializeDiffs(diffs: Diff[], options: DiffOptions): string {
       const header = getHeader(diff, options, fileIndex, options.includeEmoji)
       const footer = options.includeFooter ? ' '.repeat(header.length) : ''
 
-      return `${coloredHeader(header, options)}\n${coloredDiff(diff, options)}\n${coloredFooter(footer, options)}`
+      return `${coloredHeader(header, options)}\n${coloredDiff(diff, options)}\n${coloredFooter(
+        footer,
+        options,
+      )}`
     })
     .join('\n\n')
 }
@@ -191,7 +194,14 @@ function getDiffString(cached: boolean): string {
   return execSync(command, { encoding: 'utf8' })
 }
 
-function getDiffs(includeUntracked: boolean, cached: boolean): Diff[] {
+/**
+ * Get the current git diff as an array of diffs.
+ *
+ * @param includeUntracked [boolean] - Include untracked files in the diff output.
+ * @param cached [boolean] - Show staged changes.
+ * @returns [String] git diff string
+ */
+export function getDiffs(includeUntracked: boolean, cached: boolean): Diff[] {
   let diffOutput = getDiffString(cached)
   if (includeUntracked && !cached) {
     const untrackedFiles = getUntrackedFilesAsDiff()
